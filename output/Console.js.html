@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Console.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Console.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var Console = React.createClass({
+  /**
+  * Get the initial state of rotation and position.
+  * @return {rotationX}
+  * @return {rotationY}
+  * @return {rotationZ}
+  * @return {positionX}
+  * @return {positionY}
+  * @return {positionZ}
+  */
+  getInitialState: function() {
+    return {
+      /** X rotation */
+      rotationX: window.consoleDelegate.rotationX / Math.PI * 180,
+      /** Y rotation */
+      rotationY: window.consoleDelegate.rotationY / Math.PI * 180,
+      /** Z rotation */
+      rotationZ: window.consoleDelegate.rotationZ / Math.PI * 180,
+      /** X position */
+      positionX: window.consoleDelegate.positionX,
+      /** Y position */
+      positionY: window.consoleDelegate.positionY,
+      /** Z position */
+      positionZ: window.consoleDelegate.positionZ,
+    };
+  },
+  /**
+  * Helpers for increment.
+  *
+  * @param {event} event - Events for actions.
+  * @param {purpose} purpose - Purpose of action.
+  *
+  */
+  incrementFor: function(event, purpose) {
+    if (purpose == 'rotation') {
+      switch (event.keyCode) {
+        case 38: // Up arrow
+        case 87: // W
+          return event.shiftKey ? 10 : 1
+        case 40: // Down arrow
+        case 83: // S
+          return event.shiftKey ? -10 : -1;
+      }
+    }
+    return 0;
+  },
+
+  /**
+  * Action that occurs upon attribute change.
+  *
+  * @param {String} onAttributeChange - Actions that occur when attributes change.
+  */
+  onAttributeChange: function(attributeName, attributeValue) {
+    switch (attributeName) {
+      /** X Rotation */
+      case 'Rotation X': window.consoleDelegate.rotationX = attributeValue * Math.PI / 180; break;
+      /** Y Rotation */
+      case 'Rotation Y': window.consoleDelegate.rotationY = attributeValue * Math.PI / 180; break;
+      /** Z Rotation */
+      case 'Rotation Z': window.consoleDelegate.rotationZ = attributeValue * Math.PI / 180; break;
+      /** X Position */
+      case 'Position X': window.consoleDelegate.positionX = attributeValue; break;
+      /** Y Position */
+      case 'Position Y': window.consoleDelegate.positionY = attributeValue; break;
+      /** Z Position */
+      case 'Position Z': window.consoleDelegate.positionZ = attributeValue; break;
+      /** Bounding Box */
+      case 'Vertex Collection': window.consoleDelegate.toggleTargetsVertexCollection(); break;
+      case 'Vertex DOM': window.consoleDelegate.toggleTargetsVertexCollectionDOMProjection(); break;
+      case 'Bounding Box DOM': window.consoleDelegate.toggleTargetsBoundingBoxDOMProjection(); break;
+    }
+  },
+  /**
+  * Rendering
+  * @return {createElement} 
+  *
+  */
+  render: function() {
+    /** X Angle Rotation */
+    var rotationXAngleElement = makeConsoleAngleAttribute('Rotation X', this.state.rotationX, 0, 360, this.onAttributeChange);
+    /** Y Angle Rotation */
+    var rotationYAngleElement = makeConsoleAngleAttribute('Rotation Y', this.state.rotationY, 0, 360, this.onAttributeChange);
+    /** Z Angle Rotation */
+    var rotationZAngleElement = makeConsoleAngleAttribute('Rotation Z', this.state.rotationZ, 0, 360, this.onAttributeChange);
+    /** Position X Element */
+    var positionXElement = makeConsolePositionAttribute('Position X', this.state.positionX, -5000, 3000, this.onAttributeChange);
+    /** Position Y Element */
+    var positionYElement = makeConsolePositionAttribute('Position Y', this.state.positionY, -5000, 3000, this.onAttributeChange);
+    /** Position Z Element */
+    var positionZElement = makeConsolePositionAttribute('Position Z', this.state.positionZ, -5000, 3000, this.onAttributeChange);
+    return (
+      React.createElement('div', {className: 'container-fluid'},
+        React.createElement('h3', null, 'Rotation'),
+        rotationXAngleElement,
+        rotationYAngleElement,
+        rotationZAngleElement,
+        React.createElement('h3', null, 'Position'),
+        positionXElement,
+        positionYElement,
+        positionZElement,
+        React.createElement('h3', null, 'Bounding Box'),
+        React.createElement(ConsoleToggle, {attributeName: 'Vertex Collection', onAttributeChange: this.onAttributeChange}),
+        React.createElement(ConsoleToggle, {attributeName: 'Vertex DOM', onAttributeChange: this.onAttributeChange}),
+        React.createElement(ConsoleToggle, {attributeName: 'Bounding Box DOM', onAttributeChange: this.onAttributeChange})
+      )
+    );
+  }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ConsoleDelegate.html">ConsoleDelegate</a></li><li><a href="VertexCollection.html">VertexCollection</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getIncrementSize">getIncrementSize</a></li><li><a href="global.html#getInitialState">getInitialState</a></li><li><a href="global.html#incrementFor">incrementFor</a></li><li><a href="global.html#makeConsoleAngleAttribute">makeConsoleAngleAttribute</a></li><li><a href="global.html#makeConsoleAttribute">makeConsoleAttribute</a></li><li><a href="global.html#makeConsolePositionAttribute">makeConsolePositionAttribute</a></li><li><a href="global.html#onAttributeChange">onAttributeChange</a></li><li><a href="global.html#onAttributeKeyDown">onAttributeKeyDown</a></li><li><a href="global.html#onClick">onClick</a></li><li><a href="global.html#onUndoClick">onUndoClick</a></li><li><a href="global.html#positionX">positionX</a></li><li><a href="global.html#positionY">positionY</a></li><li><a href="global.html#positionZ">positionZ</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#rotationX">rotationX</a></li><li><a href="global.html#rotationY">rotationY</a></li><li><a href="global.html#rotationZ">rotationZ</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Dec 02 2015 22:45:44 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
